@@ -2,14 +2,11 @@ totalFuelRequiment mass =
   totalFuelRequimentHelper mass 0
   where
     totalFuelRequimentHelper newMass acc
-      | newFuel > 0 = totalFuelRequimentHelper newFuel (acc + newFuel)
-      | otherwise   = acc
+      | newFuel == 0 = acc
+      | otherwise    = totalFuelRequimentHelper newFuel (acc + newFuel)
       where
         newFuel = fuelRequiments newMass
-        fuelRequiments mass =
-          if fuel < 0
-            then 0
-            else fuel
+        fuelRequiments mass = max fuel 0
           where
             fuel = (mass `div` 3) - 2
 
